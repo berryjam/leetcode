@@ -13,8 +13,8 @@ class GameOfLifeBoard {
  */
 public class GameOfLife {
 
-    public static int LIVE = 1;
-    public static int DEAD = 0;
+    public static final int LIVE = 1;
+    public static final int DEAD = 0;
 
     GameOfLifeBoard[][] gameOfLifeBoards;
 
