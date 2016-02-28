@@ -8,7 +8,7 @@ package com.berryjam;
 public class SimplifyPath {
 
     public enum State {
-        INIT, SLASH, DOT, DOUBLE_DOT, CHAR;
+        INIT, SLASH, DOT, DOUBLE_DOT, CHAR
     }
 
     public String simplifyPath(String path) {
@@ -19,6 +19,7 @@ public class SimplifyPath {
         String result = "";
         State state = State.INIT;
 
+        // the core state machine
         for (int i = 0; i < path.length(); i++) {
             char ch = path.charAt(i);
             switch (state) {
@@ -87,6 +88,7 @@ public class SimplifyPath {
 
         String finalResult = "";
         state = State.INIT;
+        // trim the nonsense '/'
         for (int i = 0; i < result.length(); i++) {
             char ch = result.charAt(i);
             switch (state) {
