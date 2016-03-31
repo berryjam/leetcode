@@ -1,6 +1,6 @@
 package com.berryjam;
 
-// 重点复习，stack overflow，用动态规划
+// 重点复习，stack overflow，用贪心算法 http://blog.csdn.net/linhuanmars/article/details/21354751
 
 /**
  * @author huangjinkun.
