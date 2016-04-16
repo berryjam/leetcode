@@ -1,44 +1,61 @@
 package com.berryjam.alibaba;
 
+import java.util.Stack;
+
 /**
  * @author huangjinkun.
- * @date 16/4/14
- * @time 下午10:21
+ * @date 16/4/15
+ * @time 上午12:21
  */
 public class Alibaba2015Ext2 {
+    int minVal;
+    int maxVal;
 
-    public int longestCommonSubstring(String text, String query) {
-        int[][] dp = new int[text.length()][query.length()];
-        for (int i = 0; i < dp.length; i++) {
-            for (int j = 0; j < dp[i].length; j++) {
-                dp[i][j] = -1;
-            }
-        }
-
-        return getLongestCommonSubstring(text, query, text.length() - 1, query.length() - 1, dp);
-    }
-
-    public int getLongestCommonSubstring(String text, String query, int i, int j, int[][] dp) {
-        if (dp[i][j] != -1) {
-            return dp[i][j];
-        }
-
-        if (i == 0 || j == 0) {
+    public int getMaxAbsoluteValInTree(TreeNode root) {
+        if (root == null || root.leftNode == null && root.rightNode == null) {
             return 0;
         }
 
-        if (text.charAt(i) == query.charAt(j)) {
-            dp[i][j] = getLongestCommonSubstring(text, query, i - 1, j - 1, dp) + 1;
-        } else {
-            dp[i][j] = Math.max(getLongestCommonSubstring(text, query, i - 1, j, dp), getLongestCommonSubstring(text,
-                    query, i, j - 1, dp));
+        minVal = root.val;
+        maxVal = root.val;
+
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            TreeNode curNode = stack.pop();
+            minVal = Math.min(minVal, curNode.val);
+            maxVal = Math.max(maxVal, curNode.val);
+            if (curNode.rightNode != null) {
+                stack.push(curNode.rightNode);
+            }
+            if (curNode.leftNode != null) {
+                stack.push(curNode.leftNode);
+            }
         }
 
-        return dp[i][j];
+        return maxVal - minVal;
     }
 
     public static void main(String[] args) {
+        TreeNode root = new TreeNode(3);
+        TreeNode node1 = new TreeNode(1);
+        TreeNode node2 = new TreeNode(2);
+        root.leftNode = node1;
+        root.rightNode = node2;
         Alibaba2015Ext2 app = new Alibaba2015Ext2();
-        System.out.println(app.longestCommonSubstring("acaccbabb", "acbac"));
+        System.out.println(app.getMaxAbsoluteValInTree(root));
     }
+}
+
+class TreeNode {
+    int val;
+    TreeNode leftNode;
+    TreeNode rightNode;
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+
+
 }
