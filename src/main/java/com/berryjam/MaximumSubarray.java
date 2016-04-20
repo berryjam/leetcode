@@ -1,7 +1,7 @@
 package com.berryjam;
 
 /**
- * 使用分治法要注意二分时的边界，求跨前后两端的情况，从中间分别向两端扩展；
+ * 使用分治法要注意二分时的边界，求跨前后两端的情况，从中间分别向两端扩展;
  * 使用动态规划要先给出状态转移方程，注意b[j]含义：http://blog.csdn.net/liufeng_king/article/details/8632430
  *
  * @author huangjinkun.

@@ -8,11 +8,6 @@ package com.berryjam;
 public class ReverseLinkedList {
     ListNode tail;
 
-//    public ListNode reverseList(ListNode head) {
-//        reverse(head);
-//        return tail;
-//    }
-
     public ListNode reverseList(ListNode head) {
         if (head == null) {
             return null;

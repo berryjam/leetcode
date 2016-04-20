@@ -1,6 +1,8 @@
 package com.berryjam;
 
 /**
+ * 链表经典问题，利用多指针获得链表长度信息
+ *
  * @author huangjinkun.
  * @date 16/4/18
  * @time 下午4:03

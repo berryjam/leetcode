@@ -46,7 +46,7 @@ public class SearchForARange {
 
     public static void main(String[] args) {
         SearchForARange app = new SearchForARange();
-        System.out.println(Arrays.toString(app.searchRange(new int[]{1,1,2}, 1)));
+        System.out.println(Arrays.toString(app.searchRange(new int[]{1, 1, 2}, 1)));
         System.out.println(Arrays.toString(app.searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8)));
     }
 }

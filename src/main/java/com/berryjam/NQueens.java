@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// 重点复习
+// 重点复习；基本类型作为参数传递时，是传递值的拷贝；对象作为参数传递时，是把对象在内存中的地址拷贝了一份传给了参数。
 
 /**
  * @author huangjinkun.
@@ -59,7 +59,7 @@ public class NQueens {
     public static void main(String[] args) {
         NQueens queens = new NQueens();
         List<List<String>> solutions = queens.solveNQueens(4);
-        for(List<String> solution:solutions){
+        for (List<String> solution : solutions) {
             System.out.println();
         }
     }

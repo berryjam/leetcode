@@ -11,8 +11,8 @@ import java.util.Map;
 public class ValidAnagram {
 
     public boolean isAnagram(String s, String t) {
-        Map<String, Integer> sMap = new HashMap<String, Integer>();
-        Map<String, Integer> tMap = new HashMap<String, Integer>();
+        Map<Character, Integer> sMap = new HashMap<Character, Integer>();
+        Map<Character, Integer> tMap = new HashMap<Character, Integer>();
 
         if (s != null && t == null || s == null && t != null || s.length() != t.length()) {
             return false;
@@ -20,24 +20,29 @@ public class ValidAnagram {
             return true;
         } else if (s != null & t != null && s.length() == t.length()) {
             for (int i = 0; i < s.length(); i++) {
-                String tmp = s.substring(i, i + 1);
-                sMap.put(tmp, sMap.get(tmp) == null ? 1 : sMap.get(tmp) + 1);
+                char ch = s.charAt(i);
+                sMap.put(ch, sMap.get(ch) != null ? sMap.get(ch) + 1 : 1);
             }
 
             for (int j = 0; j < t.length(); j++) {
-                String tmp = t.substring(j, j + 1);
-                tMap.put(tmp, tMap.get(tmp) == null ? 1 : tMap.get(tmp) + 1);
+                char ch = t.charAt(j);
+                if (!sMap.containsKey(ch)) {
+                    return false;
+                } else {
+                    int count = sMap.get(ch);
+                    count--;
+                    if (count == 0) {
+                        sMap.remove(ch);
+                    } else {
+                        sMap.put(ch, count);
+                    }
+                }
             }
-        }
 
-        boolean result = true;
-        for (String tmp : sMap.keySet()) {
-            if (!tMap.containsKey(tmp) || sMap.get(tmp).compareTo(tMap.get(tmp)) != 0) {
-                return false;
-            }
+            return true;
         }
-
-        return result;
+        
+        return false;
     }
 
 

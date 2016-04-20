@@ -18,7 +18,7 @@ public class ParenthesisDepth {
         Stack<Integer> depths = new Stack<Integer>();
         depths.push(0);
 
-        int curDepth = 0;
+        int curDepth;
         for (int i = 0; i < input.length(); i++) {
             char ch = input.charAt(i);
             switch (ch) {
