@@ -1,6 +1,8 @@
 package com.berryjam;
 
 /**
+ * 还有一种更简单的方式是先转置再对每行逆序
+ *
  * @author huangjinkun.
  * @date 16/4/25
  * @time 下午9:02
