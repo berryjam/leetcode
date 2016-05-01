@@ -1,8 +1,11 @@
 package com.berryjam.alibaba;
 
+import com.google.common.collect.Lists;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import com.berryjam.alibaba.HongBaoCoupon.Item;
 
 /**
  * @author huangjinkun.
@@ -22,7 +25,7 @@ public class CouponRecommendation {
         Coupon result = null;
         double bouns = 0;
         for (Coupon coupon : coupons) {
-            if (coupon.getBouns(goodsPrice) < bouns) {
+            if (coupon.getBouns(goodsPrice) > bouns) {
                 result = coupon;
                 bouns = coupon.getBouns(goodsPrice);
             }
@@ -35,12 +38,16 @@ public class CouponRecommendation {
     public static void main(String[] args) {
         CouponRecommendation app = new CouponRecommendation();
 
-        double googdsPrice = 201;
+        double goodsPrice = 201;
         Coupon manBaoYouCoupon = new ManBaoYouCoupon(100, 20);
+        Item item1 = new Item(100, 20);
+        Item item2 = new Item(200, 30);
+        HongBaoCoupon hongBaoCoupon = new HongBaoCoupon(Lists.newArrayList(item1, item2));
         List<Coupon> coupons = new ArrayList<Coupon>();
         coupons.add(manBaoYouCoupon);
+        coupons.add(hongBaoCoupon);
         app.setCoupons(coupons);
-        app.getBestCoupon(googdsPrice);
+        System.out.println(app.getBestCoupon(goodsPrice).getBouns(goodsPrice));
     }
 
     public List<Coupon> getCoupons() {
@@ -99,23 +106,46 @@ class ManBaoYouCoupon extends Coupon {
  * 红包优惠券
  */
 class HongBaoCoupon extends Coupon {
-    List<Map<Double, Double>> bounes = new ArrayList<Map<Double, Double>>(); // 按优惠顺序递增
+    List<Item> items = new ArrayList<Item>(); // 按优惠顺序递增
 
-    public HongBaoCoupon(List<Map<Double, Double>> bounes) {
-        this.bounes = bounes;
+    public HongBaoCoupon(List<Item> items) {
+        this.items = items;
     }
 
     @Override
     double getBouns(double goodsPrice) {
-        for (int i = bounes.size() - 1; i >= 0; i--) {
-            Map<Double, Double> map = bounes.get(i);
-            double limit = map.keySet().iterator().next();
-            if (goodsPrice >= limit) {
-                return map.get(limit);
+        for (int i = items.size() - 1; i >= 0; i--) {
+            if (goodsPrice >= items.get(i).limit) {
+                return items.get(i).bouns;
             }
         }
         return 0;
     }
 
 
+    static class Item {
+        double limit; // 符合满减优惠的最低商品总价
+        double bouns; // 优惠额度
+
+        public Item(double limit, double bounds) {
+            this.limit = limit;
+            this.bouns = bounds;
+        }
+
+        public double getLimit() {
+            return limit;
+        }
+
+        public void setLimit(double limit) {
+            this.limit = limit;
+        }
+
+        public double getBouns() {
+            return bouns;
+        }
+
+        public void setBouns(double bouns) {
+            this.bouns = bouns;
+        }
+    }
 }
