@@ -26,7 +26,6 @@ public class HdfsSystem {
      */
     public void saveFile(String savedFilePath, byte[] data) throws FileNotFoundException {
         int offset = data.length / 3;
-        int leftOffset = data.length - 3 * offset;
         byte[][] blocks = new byte[3][];
         for (int i = 0; i < 3; i++) {
             blocks[i] = Arrays.copyOfRange(data, i * offset, (i + 1) * offset - 1);
@@ -55,6 +54,13 @@ public class HdfsSystem {
     public byte[] readFile(String filePath) {
         //TODO
         return null;
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        HdfsSystem app = new HdfsSystem();
+        String filePath = "";
+        app.saveFile(filePath, null);
+        byte[] contents = app.readFile(filePath);
     }
 
     static class NameNode {
