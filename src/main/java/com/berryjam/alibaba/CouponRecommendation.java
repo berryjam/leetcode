@@ -3,6 +3,8 @@ package com.berryjam.alibaba;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.berryjam.alibaba.HongBaoCoupon.Item;
@@ -106,14 +108,20 @@ class ManBaoYouCoupon extends Coupon {
  * 红包优惠券
  */
 class HongBaoCoupon extends Coupon {
-    List<Item> items = new ArrayList<Item>(); // 按优惠顺序递增
+    List<Item> items = new ArrayList<Item>();
 
     public HongBaoCoupon(List<Item> items) {
         this.items = items;
+        Collections.sort(this.items, new Comparator<Item>() {
+            public int compare(Item o1, Item o2) {
+                return Double.compare(o1.getBouns(), o2.getBouns());
+            }
+        });
     }
 
     @Override
     double getBouns(double goodsPrice) {
+
         for (int i = items.size() - 1; i >= 0; i--) {
             if (goodsPrice >= items.get(i).limit) {
                 return items.get(i).bouns;
