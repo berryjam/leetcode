@@ -3,10 +3,7 @@ package com.berryjam.alibaba;
 import com.google.common.collect.Lists;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -51,16 +48,34 @@ public class HdfsSystem {
      * @param filePath 要读取的文件路径
      * @return
      */
-    public byte[] readFile(String filePath) {
-        //TODO
-        return null;
+    public Byte[] readFile(String filePath) throws IOException {
+        Byte[] result = new Byte[1024];
+        List<Byte> tempBytes = new LinkedList<Byte>();
+        NameNode nameNode = new NameNode();
+        List<Integer> blockIds = nameNode.getFileBlocks().get(filePath);
+        Map<Integer, List<String>> blockPathMap = nameNode.getBlockPathMap();
+        for (Integer blockId : blockIds) {
+            List<String> redundantBlockPath = blockPathMap.get(blockId);
+            Random random = new Random(redundantBlockPath.size());
+            int ranIndex = random.nextInt();
+            String path = redundantBlockPath.get(ranIndex);
+            byte[] buffer = new byte[1024];
+            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(new File(path)));
+            while ((bis.read(buffer)) != -1) {
+                for (byte b : buffer) {
+                    tempBytes.add(b);
+                }
+            }
+            bis.close();
+        }
+        return tempBytes.toArray(result);
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         HdfsSystem app = new HdfsSystem();
         String filePath = "";
         app.saveFile(filePath, null);
-        byte[] contents = app.readFile(filePath);
+        Byte[] contents = app.readFile(filePath);
     }
 
     static class NameNode {
